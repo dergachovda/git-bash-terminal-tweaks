@@ -149,7 +149,7 @@ else
   {
     echo ""
     echo "$TWEAKS_MARKER"
-    echo "source \"$TWEAKS_TARGET\""
+    echo "source ~/.bashrc-tweaks"
   } >> "$BASHRC_FILE"
   print_success "Added .bashrc-tweaks to $BASHRC_FILE"
 fi
@@ -171,7 +171,7 @@ if [[ -f "$PODMAN_TARGET" ]]; then
       {
         echo ""
         echo "$PODMAN_MARKER"
-        echo "source \"$PODMAN_TARGET\""
+        echo "source ~/.bashrc-podman"
       } >> "$BASHRC_FILE"
       print_success "Added .bashrc-podman to $BASHRC_FILE"
     else
