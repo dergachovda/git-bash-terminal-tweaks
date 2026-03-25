@@ -1,0 +1,51 @@
+# ============================================================================
+# Git Bash Terminal Tweaks - Podman/Docker Compatibility
+# ============================================================================
+# This file provides docker-like interface using podman
+# Source this file from ~/.bashrc to enable podman aliases
+# 
+# Useage:
+#   docker run ...          → podman run ...
+#   docker compose up       → podman compose up
+#   docker-compose up       → podman compose up
+
+# ============================================================================
+# SIMPLE DOCKER/DOCKER-COMPOSE ALIASES
+# ============================================================================
+
+alias docker='podman'
+alias docker-compose='podman compose'
+
+# ============================================================================
+# DOCKER FUNCTION - Handles "docker compose" as a subcommand
+# ============================================================================
+# This function allows you to use "docker compose" (with space) which is
+# the modern docker CLI behavior. It automatically maps to "podman compose"
+
+# Uncomment this block if you prefer a function-based approach that handles
+# both "docker compose" (with space as separate arg) and "docker-compose" usage
+
+# docker() {
+#   if [[ "$1" == "compose" ]]; then
+#     shift
+#     podman compose "$@"
+#   else
+#     podman "$@"
+#   fi
+# }
+
+# ============================================================================
+# PODMAN-SPECIFIC ALIASES (optional)
+# ============================================================================
+
+# Quick podman commands
+alias pst='podman ps'
+alias psta='podman ps -a'
+alias pim='podman images'
+alias prun='podman run'
+alias pexec='podman exec'
+alias pcomp='podman compose'
+
+# ============================================================================
+# END OF PODMAN CONFIGURATION
+# ============================================================================

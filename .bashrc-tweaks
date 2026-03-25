@@ -1,0 +1,92 @@
+# ============================================================================
+# Git Bash Terminal Tweaks - Core Configuration
+# ============================================================================
+# This file contains shared bash history settings and useful aliases
+# Source this file from ~/.bashrc to apply the tweaks
+
+# ============================================================================
+# BASH HISTORY SETTINGS - Shared across all sessions
+# ============================================================================
+
+# Large history size
+export HISTSIZE=10000
+export HISTFILESIZE=20000
+
+# Append to history file instead of overwriting
+shopt -s histappend
+
+# Use a shared history file for all sessions
+export HISTFILE="$HOME/.bash_history_shared"
+
+# Immediately write history after each command (don't wait for shell exit)
+export PROMPT_COMMAND="history -a; history -n; $PROMPT_COMMAND"
+
+# Ignore duplicate lines and lines starting with space
+export HISTCONTROL=ignoredups:ignorespace
+
+# ============================================================================
+# PRODUCTIVITY ALIASES
+# ============================================================================
+
+# Quick edit aliases
+alias edit-podman-aliases='code ~/.bashrc-podman'
+alias edit-tweaks='code ~/.bashrc-tweaks'
+
+# Quick edit common directories
+alias edit-profile='code ~/.bashrc'
+
+# List commands
+alias ll='ls -lah'
+alias la='ls -A'
+alias l='ls -CF'
+
+# Directory navigation
+alias cd..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+
+# Shortcuts to common directories
+alias home='cd ~'
+alias root='cd /'
+
+# ============================================================================
+# GIT ALIASES
+# ============================================================================
+
+alias gst='git status'
+alias ga='git add'
+alias gaa='git add --all'
+alias gapatch='git add --patch'
+alias gc='git commit'
+alias gca='git commit --amend'
+alias gcam='git commit -am'
+alias gl='git log --oneline -n 20'
+alias glp='git log --pretty=format:"%h %s" -n 20'
+alias gd='git diff'
+alias gdh='git diff HEAD'
+alias gds='git diff --staged'
+alias gb='git branch'
+alias gba='git branch -a'
+alias gco='git checkout'
+alias gcob='git checkout -b'
+alias gm='git merge'
+alias gp='git pull'
+alias gps='git push'
+alias gr='git reset'
+alias grh='git reset --hard'
+alias grs='git reset --soft'
+alias gclean='git clean -fd'
+
+# ============================================================================
+# SYSTEM UTILITIES
+# ============================================================================
+
+# Clear screen and display welcome
+alias clear='clear && echo "Welcome to Git Bash"'
+
+# Quick exit
+alias q='exit'
+
+# ============================================================================
+# END OF GIT BASH TWEAKS
+# ============================================================================
