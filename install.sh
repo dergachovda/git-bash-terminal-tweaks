@@ -142,42 +142,37 @@ fi
 # ============================================================================
 
 
-# Check if tweaks are already sourced from home dir
+
+# Remove any existing .bashrc-tweaks marker+quoted source lines
 if grep -q "$TWEAKS_MARKER" "$BASHRC_FILE"; then
-  print_info ".bashrc-tweaks already sourced (skipping)"
-else
-  {
-    echo ""
-    echo "$TWEAKS_MARKER"
-    echo "source ~/.bashrc-tweaks"
-  } >> "$BASHRC_FILE"
-  print_success "Added .bashrc-tweaks to $BASHRC_FILE"
+  # Remove lines from marker to next blank or comment
+  awk 'BEGIN{skip=0} {if ($0 ~ /# git-bash-terminal-tweaks: .bashrc-tweaks/) {skip=1; next} if (skip && ($0 ~ /^$/ || $0 ~ /^#/)) {skip=0} if (!skip) print $0}' "$BASHRC_FILE" > "$BASHRC_FILE.tmp" && mv "$BASHRC_FILE.tmp" "$BASHRC_FILE"
 fi
+# Append correct marker and unquoted source
+{
+  echo ""
+  echo "$TWEAKS_MARKER"
+  echo "source ~/.bashrc-tweaks"
+} >> "$BASHRC_FILE"
+print_success "Ensured .bashrc-tweaks is sourced correctly in $BASHRC_FILE"
 
 # ============================================================================
 # OPTIONAL: SOURCE PODMAN ALIASES
 # ============================================================================
 
 
-# Only prompt to source podman if file exists (in home) and is not already sourced
+# Remove any existing .bashrc-podman marker+quoted source lines
 if [[ -f "$PODMAN_TARGET" ]]; then
   if grep -q "$PODMAN_MARKER" "$BASHRC_FILE"; then
-    print_info ".bashrc-podman already sourced (skipping)"
-  else
-    # If file was just copied or updated, or already existed, ask to source if not already
-    read -p "Source podman/docker aliases from ~/.bashrc-podman in ~/.bashrc? (y/n) [n]: " -r SOURCE_PODMAN
-    SOURCE_PODMAN=${SOURCE_PODMAN:-n}
-    if [[ "$SOURCE_PODMAN" =~ ^[Yy]$ ]]; then
-      {
-        echo ""
-        echo "$PODMAN_MARKER"
-        echo "source ~/.bashrc-podman"
-      } >> "$BASHRC_FILE"
-      print_success "Added .bashrc-podman to $BASHRC_FILE"
-    else
-      print_info "Skipped sourcing .bashrc-podman in .bashrc."
-    fi
+    awk 'BEGIN{skip=0} {if ($0 ~ /# git-bash-terminal-tweaks: .bashrc-podman/) {skip=1; next} if (skip && ($0 ~ /^$/ || $0 ~ /^#/)) {skip=0} if (!skip) print $0}' "$BASHRC_FILE" > "$BASHRC_FILE.tmp" && mv "$BASHRC_FILE.tmp" "$BASHRC_FILE"
   fi
+  # Always append correct marker and unquoted source
+  {
+    echo ""
+    echo "$PODMAN_MARKER"
+    echo "source ~/.bashrc-podman"
+  } >> "$BASHRC_FILE"
+  print_success "Ensured .bashrc-podman is sourced correctly in $BASHRC_FILE"
 fi
 
 # ============================================================================
